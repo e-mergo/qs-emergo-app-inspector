@@ -1,0 +1,16 @@
+<div qv-requirements class="requirements-wrapper qs-emergo-app-inspector" ng-class="{'incomplete': !object.inEditState()}" aria-hidden="false">
+	<div class="requirements">
+		<h2 class="header">
+			<i class="object-icon lui-icon lui-icon--search"></i>
+		</h2>
+
+		<lui-button ng-if="object.inEditState()" class="open-button" ng-class="{'lui-active': isActive()}" qva-activate="open()">Inspect App</lui-button>
+
+		<p ng-if="!object.inEditState()" class="incomplete-text">
+			<span ng-if="canSwitchToEdit">Use this extension in
+				<button class="lui-button open-edit-mode" qva-activate="switchToEdit()">Edit mode</button>
+			</span>
+			<span ng-if="!canSwitchToEdit" q-translation="Visualization.Requirements.IncompleteVisualization"></span>
+		</p>
+	</div>
+</div>

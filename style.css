@@ -1,0 +1,366 @@
+/**
+ * E-mergo App Inspector Styles
+ *
+ * @package E-mergo Tools Bundle
+ */
+
+.qv-client.qv-card #qv-stage-container #grid .qv-object-qs-emergo-app-inspector .qv-inner-object {
+	padding: 0;
+}
+
+.qv-client.qv-card #qv-stage-container #grid .qv-object-qs-emergo-app-inspector .qv-inner-object .qv-object-header.thin,
+.qv-object-qs-emergo-app-inspector .qv-inner-object .qv-object-header.thin {
+	height: 0;
+}
+
+.qs-emergo-app-inspector .open-edit-mode {
+	margin-left: 5px;
+	padding: 0px 10px;
+	background: #fff;
+}
+
+.qs-emergo-app-inspector .open-edit-mode:active {
+	background: rgb(89,89,89);
+}
+
+.qs-emergo-app-inspector .open-button {
+	height: 32px;
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-bottom: 10px;
+	position: relative;
+}
+
+.qv-layout-small .qs-emergo-app-inspector .open-button,
+.qv-layout-xsmall .qs-emergo-app-inspector .open-button,
+.qv-layout-spark .qs-emergo-app-inspector .open-button {
+	height: 28px;
+	width: 150px;
+}
+
+/* Modal */
+
+#qs-emergo-app-inspector-modal {
+	width: 75%;
+	max-width: 1280px;
+}
+
+#qs-emergo-app-inspector-modal .modal-content {
+	display: flex;
+	flex-direction: row;
+	height: 65vh;
+	padding: 0px;
+}
+
+#qs-emergo-app-inspector-modal .content-nav {
+	width: 400px;
+	display: flex;
+	flex-direction: row;
+}
+
+#qs-emergo-app-inspector-modal .loading .content-nav {
+	display: none;
+}
+
+#qs-emergo-app-inspector-modal .nav-section {
+	width: 200px;
+	height: 100%;
+	overflow-y: scroll;
+	border-right: 1px solid rgba(0,0,0,.1);
+}
+
+#qs-emergo-app-inspector-modal .nav-section.empty {
+	text-align: center;
+	font-style: italic;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-search {
+	background: transparent;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .assets-search-panel {
+	border-bottom: 1px solid #e6e6e6;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #e6e6e6;
+	text-align: left;
+	cursor: pointer;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item:focus {
+	box-shadow: 0 0 1px 1px rgba(63,138,179,.7);
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item.active {
+	background: rgba(0, 0, 0, 0.05);
+	font-weight: 700;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item .active-marker {
+	height: 100%;
+	border-left: 2px solid transparent;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item.active .active-marker {
+	height: 37px;
+	border-left: 2px solid #009845;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item .count {
+	padding-right: 0px;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .lui-list__item .count:not([data-count="0"]):before {
+	content: attr(data-count);
+	padding: 0px 5px;
+	text-align: center;
+	background: #dfdfdf;
+}
+
+#qs-emergo-app-inspector-modal .searching .nav-section.app-object-assets .lui-list__item .count:not([data-count="0"]):before {
+	border-radius: 8px;
+    font-size: 11px;
+    line-height: 16px;
+    height: 16px;
+    font-weight: 700;
+    color: #595959;
+    background: #ffce26;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .assets-nohits {
+	display: block;
+	padding-top: 20px;
+	line-height: 1.6;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .assets-nohits .query {
+	width: 100%;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .assets-nohits .query div {
+	text-overflow: ellipsis;
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 200px;
+	vertical-align: middle;
+	width: auto;
+	max-width: calc(168px - 18px); /* Apply correction for browser scroll bar */
+	padding-right: 1px;
+	padding-left: 1px;
+	font-weight: 700;
+}
+
+#qs-emergo-app-inspector-modal .nav-section .assets-nohits .message {
+	display: block;
+}
+
+/* Modal Content */
+
+#qs-emergo-app-inspector-modal .content-main {
+	position: relative;
+	flex: 1 1 auto;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 20px;
+	background-color: #fafafa;
+}
+
+#qs-emergo-app-inspector-modal .loading .content-main,
+#qs-emergo-app-inspector-modal .nothing .content-main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#qs-emergo-app-inspector-modal .modal-loading-container {
+	text-align: center;
+}
+
+#qs-emergo-app-inspector-modal .modal-loader {
+	height: 38px;
+	width: 38px;
+	display: inline-block;
+}
+
+#qs-emergo-app-inspector-modal .nothing .inline-title {
+	font-style: italic;
+	font-weight: normal;
+}
+
+#qs-emergo-app-inspector-modal .content-section ul {
+	list-style-type: none;
+}
+
+#qs-emergo-app-inspector-modal .item-section .content-section,
+#qs-emergo-app-inspector-modal .content-section ~ .multi-item-section,
+#qs-emergo-app-inspector-modal .content-section ~ .content-section {
+	position: relative;
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid #d9d9d9;
+}
+
+#qs-emergo-app-inspector-modal .item-heading,
+#qs-emergo-app-inspector-modal .section-heading {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+#qs-emergo-app-inspector-modal .item-title {
+	flex: 1;
+}
+
+#qs-emergo-app-inspector-modal .item-details .item-detail {
+	display: grid;
+	grid-template-columns: 110px 1fr;
+	align-items: center;
+}
+
+#qs-emergo-app-inspector-modal .item-details .item-detail:not(:last-child) {
+	margin-bottom: 5px;
+}
+
+#qs-emergo-app-inspector-modal .item-details .item-detail .detail-value {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	grid: 1px;
+}
+
+#qs-emergo-app-inspector-modal .is-code {
+	display: inline-block;
+	font-family: monospace;
+	background: rgba(0, 0, 0, 0.05);
+	margin: 1px;
+	padding: 2px 4px;
+	line-break: anywhere;
+	user-select: text;
+}
+
+#qs-emergo-app-inspector-modal .item-preview .section-body {
+	border: 1px solid #0003;
+	width: 100%;
+	aspect-ratio: 2 / 1;
+	overflow: hidden;
+}
+
+#qs-emergo-app-inspector-modal .item-preview .item-preview-iframe {
+	height: 200%;
+	width: 200%;
+	margin: 0;
+	padding: 0;
+	transform: scale(.5);
+	transform-origin: 0 0;
+}
+
+#qs-emergo-app-inspector-modal .error-description .error-code:before {
+	content: "\f";
+}
+
+#qs-emergo-app-inspector-modal .multi-item-nav {
+	display: flex;
+}
+
+#qs-emergo-app-inspector-modal .multi-item-nav .section-title {
+	flex: 1;
+	margin: 0px;
+	line-height: 28px;
+}
+
+#qs-emergo-app-inspector-modal .multi-item-nav .section-title + span {
+	margin-right: 10px;
+	line-height: 28px;
+}
+
+#qs-emergo-app-inspector-modal .multi-item-nav .section-title ~ * {
+	display: block;
+}
+
+#qs-emergo-app-inspector-modal .item-code .lui-textarea {
+	resize: none;
+	height: inherit;
+	height: 35vh;
+	min-height: 200px;
+	max-height: 400px;
+}
+
+/* Layout changes per QS Nov 2022 */
+
+.lui-modal-background:not(.lui-fade):has(+ .qs-emergo-modal) {
+	opacity: .5;
+}
+
+#qs-emergo-app-inspector-modal.qs-emergo-modal {
+	display: flex;
+	flex-direction: column;
+	width: 93%;
+	height: 93%;
+	max-height: calc(100% - 24px);
+	width: calc(100% - 24px);
+	color: #404040;
+}
+
+.qs-emergo-modal .lui-dialog__header {
+	display: flex;
+	justify-content: space-between;
+	height: 24px;
+	padding: 12px 8px 12px 12px;
+	box-sizing: content-box;
+	background-color: #fafafa;
+	border-bottom: 1px rgba(0, 0, 0, 0.15) solid;
+	line-height: 24px;
+}
+
+.qs-emergo-modal .lui-dialog__title {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+}
+
+.qs-emergo-modal .qs-emergo-modal-close {
+	height: 30px;
+	margin-top: -2px;
+	padding: 7px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+#qs-emergo-app-inspector-modal.qs-emergo-modal .modal-content {
+	max-height: auto;
+	background-color: #f2f2f2;
+}
+
+.qs-emergo-modal .lui-dialog__footer {
+	display: flex;
+	height: auto;
+	justify-content: flex-end;
+	background-color: #fafafa;
+	border-top: 1px rgba(0, 0, 0, 0.15) solid;
+}
+
+.qs-emergo-modal .lui-dialog__footer .lui-button {
+	height: 32px;
+	color: #404040;
+	background-color: rgba(255,255,255,.6);
+	font-size: 14px;
+}
+
+.qs-emergo-modal .lui-dialog__footer .lui-button:hover {
+	background-color: rgba(64, 64, 64, 0.05);
+	border: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.qs-emergo-modal .lui-dialog__footer .lui-button:active {
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.23);
+}

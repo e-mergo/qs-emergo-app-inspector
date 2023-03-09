@@ -1,0 +1,190 @@
+<lui-dialog id="qs-emergo-app-inspector-modal" x-variant="{{::variant}}" class="qv-confirm-dialog qs-emergo-modal">
+	<lui-dialog-header ng-if="input.title">
+		<lui-dialog-title>{{input.title}}</lui-dialog-title>
+		<button type="button" qva-activate="close()" class="qs-emergo-modal-close lui-icon lui-icon--close" q-title-translation="Common.Close"></button>
+	</lui-dialog-header>
+	<lui-dialog-body class="modal-content" ng-class="{ loading: loading, nothing: nothingFound || !activeItem, searching: !!search.query }">
+		<div class="content-nav">
+			<div class="nav-section app-object-assets">
+				<qv-assets-search-panel query="search.query" look="light"></qv-assets-search-panel>
+				<div class="lui-list">
+					<button class="app-object-asset lui-list__item library-item" ng-class="{ active: activeAsset === asset.id }" ng-repeat="asset in assets track by asset.id" qva-activate="assetClicked(asset.id, $event)" ng-title="asset.title">
+						<div class="active-marker"></div>
+						<div class="lui-list__text library-item-text app-asset-text">
+							<div class="titles">
+								<span class="title">{{asset.label}}</span>
+							</div>
+							<div class="lui-list__aside count" ng-attr-data-count="{{filteredItems[asset.id].length}}"></div>
+						</div>
+					</button>
+				</div>
+			</div>
+			<div class="nav-section app-object-items" ng-class="{ empty: ! selected.length }">
+				<span class="assets-nohits" ng-show="!search.query && !selected.length" q-translation="library.noitems"></span>
+				<qv-assets-search-no-hits query="search.query" show="search.query && !selected.length"></qv-assets-search-no-hits>
+				<div class="lui-list">
+					<button class="app-object-item lui-list__item library-item" ng-class="{ active: activeItem.id === item.id }" ng-repeat="item in selected track by item.id" qva-activate="itemClicked(item, $event)" ng-attr-title="{{itemLabel(item)}}">
+						<div class="active-marker"></div>
+						<div class="lui-list__aside lui-icon lui-icon--{{item.icon}}" ng-if="item.icon"></div>
+						<div class="lui-list__text library-item-text app-item-text">
+							<div class="titles">
+								<span class="title">{{itemLabel(item)}}</span>
+							</div>
+							<div class="lui-list__aside count" ng-attr-data-count="{{item.count || 0}}"></div>
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-main">
+			<div class="modal-loading-container" ng-if="loading">
+				<div class="qv-loader modal-loader"></div>
+			</div>
+			<div class="content" ng-if="!loading">
+				<div class="content-sections app-object-item-details" ng-if="!!activeItem">
+
+					<div class="content-section item-heading">
+						<div class="item-title">
+							<h2 class="section-title">{{itemLabel(activeItem)}}</h2>
+							<span class="section-subtitle">{{activeItem.id}}</span>
+						</div>
+					</div>
+
+					<div class="content-section item-details" ng-if="activeItem.details.length">
+						<div class="section-heading">
+							<h2 class="section-title">Details</h2>
+							<lui-button class="btn-nav-masterobject" qva-activate="navToItem(activeItem.isMasterObject)" title="View the master object" ng-if="activeItem.isMasterObject"><i class="lui-button__icon lui-icon lui-icon--forward"></i><span class="lui-button__text" q-translation="properties.masterItem"></span></lui-button>
+						</div>
+						<div class="section-body">
+							<ul>
+								<li class="item-detail" ng-repeat="detail in activeItem.details">
+									<div class="detail-term">
+										<span class="title">{{detail.label}}</span>
+									</div>
+									<div class="detail-value">
+										<span class="description" ng-class="{ 'is-code': detail.isCode }" ng-repeat="value in detail.value track by $index">{{value}}</span>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="content-section item-errors" ng-if="activeItem.errors.length">
+						<div class="section-heading">
+							<h2 class="section-title">Errors</h2>
+						</div>
+						<div class="section-body">
+							<ul>
+								<li class="item-error" ng-repeat="error in activeItem.errors track by $index">
+									<div class="error-description">
+										<span class="description">{{error.message}}</span>
+										<code class="is-code" ng-repeat="code in error.errorData">{{code}}</code>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="content-section item-preview" ng-if="activeItem.preview">
+						<div class="section-heading">
+							<h2 class="section-title">Preview</h2>
+						</div>
+						<div class="section-body">
+							<iframe ng-src="{{activeItem.preview.url}}" class="item-preview-iframe" frameborder="0"></iframe>
+						</div>
+					</div>
+
+					<div class="multi-item-section item-section" ng-if="activeItem.items">
+						<div class="multi-item-nav section-heading">
+							<h2 class="section-title">{{activeSubItem.id}}</h2>
+							<span>Showing {{activeSubItemIx + 1}} / {{activeItem.items.length}}</span>
+							<div class="lui-buttongroup">
+								<lui-button class="btn-multi-item-prev" qva-activate="subItemClicked(activeSubItemIx - 1)" ng-disabled="activeSubItemIx == 0" q-title-translation="Common.Previous"><i class="lui-icon lui-icon--previous lui-button__icon"></i></lui-button>
+								<lui-button class="btn-multi-item-next" qva-activate="subItemClicked(activeSubItemIx + 1)" ng-disabled="activeSubItemIx == activeItem.items.length - 1" q-title-translation="Common.Next"><i class="lui-icon lui-icon--next lui-button__icon"></i></lui-button>
+							</div>
+						</div>
+
+						<div class="content-section item-details" ng-if="activeSubItem.details.length">
+							<div class="section-heading">
+								<h2 class="section-title">Item</h2>
+								<lui-button class="btn-nav-masterobject" qva-activate="navToItem(activeSubItem.isMasterObject)" title="View the master object" ng-if="activeSubItem.isMasterObject"><i class="lui-button__icon lui-icon lui-icon--forward"></i><span class="lui-button__text" q-translation="properties.masterItem"></span></lui-button>
+							</div>
+							<div class="section-body">
+								<ul>
+									<li class="item-detail" ng-repeat="detail in activeSubItem.details">
+										<div class="detail-term">
+											<span class="title">{{detail.label}}</span>
+										</div>
+										<div class="detail-value">
+											<span class="description" ng-class="{ 'is-code': detail.isCode }" ng-repeat="value in detail.value track by $index">{{value}}</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="content-section item-errors" ng-if="activeSubItem.errors.length">
+							<div class="section-heading">
+								<h2 class="section-title">Errors</h2>
+							</div>
+							<div class="section-body">
+								<ul>
+									<li class="item-error" ng-repeat="error in activeSubItem.errors track by $index">
+										<div class="error-description">
+											<span class="description">{{error.message}}</span>
+											<code class="is-code" ng-repeat="code in error.errorData">{{code}}</code>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="content-section item-preview" ng-if="activeSubItem.preview">
+							<div class="section-heading">
+								<h2 class="section-title">Preview</h2>
+							</div>
+							<div class="section-body">
+								<iframe ng-src="{{activeSubItem.preview.url}}" class="item-preview-iframe" frameborder="0"></iframe>
+							</div>
+						</div>
+
+						<div class="content-section item-code" ng-repeat="code in activeSubItem.code">
+							<div class="section-heading">
+								<h2 class="section-title">{{code.label}}</h2>
+								<lui-button class="btn-copy-code" qva-activate="copyToClipboard(code.value)" title="Copy code to the clipboard"><i class="lui-button__icon lui-icon lui-icon--copy"></i><span class="lui-button__text" q-translation="Common.Copy"></span></lui-button>
+							</div>
+							<div class="section-body">
+								<textarea class="lui-textarea">{{code.value}}</textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="single-item-section item-section" ng-if="!activeItem.items">
+						<div class="content-section item-code" ng-repeat="code in activeItem.code">
+							<div class="section-heading">
+								<h2 class="section-title">{{code.label}}</h2>
+								<lui-button class="btn-copy-code" qva-activate="copyToClipboard(code.value)" title="Copy code to the clipboard"><i class="lui-button__icon lui-icon lui-icon--copy"></i><span class="lui-button__text" q-translation="Common.Copy"></span></lui-button>
+							</div>
+							<div class="section-body">
+								<textarea class="lui-textarea">{{code.value}}</textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Nothing found -->
+				<div class="content-section nothing-found" ng-if="nothingFound">
+					<h2 class="inline-title">There were no items found in the selected app</h2>
+				</div>
+				<!-- Nothing selected -->
+				<div class="content-section nothing-selected" ng-if="!activeItem">
+					<h2 class="inline-title">Select an item on the left to inspect its details</h2>
+				</div>
+			</div>
+		</div>
+	</lui-dialog-body>
+	<lui-dialog-footer>
+		<lui-button x-variant="{{::variant}}" ng-if="!input.hideOkButton" qva-activate="close(true);">{{::okLabel}}</lui-button>
+	</lui-dialog-footer>
+</lui-dialog>
