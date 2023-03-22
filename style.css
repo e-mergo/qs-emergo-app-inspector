@@ -302,7 +302,6 @@
 #qs-emergo-app-inspector-modal.qs-emergo-modal {
 	display: flex;
 	flex-direction: column;
-	width: 93%;
 	height: 93%;
 	max-height: calc(100% - 24px);
 	width: calc(100% - 24px);
