@@ -2,22 +2,33 @@
  * E-mergo App Inspector Property Panel definition
  *
  * @param  {Object} util          E-mergo utility functions
+ * @param  {Object} docs          E-mergo documentation functions
+ * @param  {String} readme        Extension readme
  * @param  {String} qext          Extension QEXT data
  * @return {Object}               Extension Property Panel definition
  */
 define([
 	"./util/util",
+	"./docs/docs",
+	"text!./README.md",
 	"text!./qs-emergo-app-inspector.qext"
-], function( util, qext ) {
+], function( util, docs, readme, qext ) {
+
+	/**
+	 * Holds the QEXT data
+	 *
+	 * @type {Object}
+	 */
+	var qext = JSON.parse(qext),
 
 	/**
 	 * Holds the settings definition of the about sub-panel
 	 *
 	 * @type {Object}
 	 */
-	var about = {
+	about = {
 		label: function() {
-			return "About " + JSON.parse(qext).title;
+			return "About ".concat(qext.title);
 		},
 		type: "items",
 		items: {
@@ -27,7 +38,7 @@ define([
 			},
 			version: {
 				label: function() {
-					return "Version: " + JSON.parse(qext).version;
+					return "Version: ".concat(qext.version);
 				},
 				component: "text"
 			},
@@ -40,7 +51,7 @@ define([
 				component: "button",
 				action: function() {
 					util.requireMarkdownMimetype().finally( function() {
-						window.open(window.requirejs.toUrl("extensions/qs-emergo-app-inspector/docs/docs.html"), "_blank");
+						docs.showModal(readme, qext);
 					});
 				}
 			}
