@@ -3,7 +3,7 @@
 	"name": "App Inspector",
 	"type": "visualization",
 	"author": "Laurens Offereins, E-mergo",
-	"version": "1.0-alpha",
+	"version": "1.0-beta",
 	"description": "Inspect the contents of the app.",
 	"icon": "search",
 	"preview": "logo-emergo.png",

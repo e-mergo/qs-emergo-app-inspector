@@ -1,7 +1,7 @@
 ---
 Type: Qlik Sense Visualization Extension
 Name: E-mergo App Inspector
-Version: 1.0-alpha
+Version: 1.0-beta
 QEXT: qs-emergo-app-inspector.qext
 ---
 
@@ -85,8 +85,8 @@ Requests for additional features can be posted in the extension's GitHub reposit
 
 ## Changelog
 
-#### 1.0-alpha - QS Nov 2022
-Public release.
+#### 1.0-beta - QS November 2022
+Public release. Ready for Qlik Cloud.
 
 #### 0.1.20201109
 Initial release.

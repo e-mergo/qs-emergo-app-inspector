@@ -293,7 +293,7 @@
 	max-height: 400px;
 }
 
-/* Layout changes per QS Nov 2022 */
+/* Layout changes per QS November 2022 */
 
 .lui-modal-background:not(.lui-fade):has(+ .qs-emergo-modal) {
 	opacity: .5;
