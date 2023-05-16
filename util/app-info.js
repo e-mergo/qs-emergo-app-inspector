@@ -1,7 +1,7 @@
 /**
  * E-mergo utility functions for getting app info
  *
- * @version 20230308
+ * @version 20230516
  * @author Laurens Offereins <https://github.com/lmoffereins>
  *
  * @param  {Object} qlik                Qlik's core API
@@ -376,7 +376,7 @@ define([
 								var name = args.extensionList.hasOwnProperty(a.properties.qInfo.qType) ? args.extensionList[a.properties.qInfo.qType].name : a.properties.qInfo.qType,
 								    count = visualizations.filter( function( b ) { return a.properties.qInfo.qType === b.properties.qInfo.qType; }).length;
 
-								return (count > 1 ? count.toString().concat(" x ") : "").concat(name);
+								return (count > 1 ? "".concat(count, " x ") : "").concat(name);
 							}).sort( function( a, b ) {
 								return a.localeCompare(b);
 							});
@@ -426,7 +426,7 @@ define([
 								label: translator.get("properties.customHeight"),
 								value: object.properties.layoutOptions && "CUSTOM" === object.properties.layoutOptions.sheetMode ? object.properties.pxHeight : null
 							},
-							cells: object.properties.height > 100 ? object.properties.height.concat(" (default is 100)") : null,
+							cells: object.properties.height > 100 ? "".concat(object.properties.height, " (default is 100)") : null,
 						};
 
 						// Add object data to list
@@ -667,7 +667,7 @@ define([
 							},
 							owner: {
 								label: "Owner", // translation?
-								value: "string" === typeof qMeta.owner ? qMeta.owner : (qMeta.owner ? qMeta.owner.userDirectory.concat("/", qMeta.owner.userId) : null) // Not available on QS Desktop
+								value: "string" === typeof qMeta.owner ? qMeta.owner : (qMeta.owner ? "".concat(qMeta.owner.userDirectory, "/", qMeta.owner.userId) : null) // Not available on QS Desktop
 							},
 							tags: {
 								label: translator.get("Common.Tags"),
