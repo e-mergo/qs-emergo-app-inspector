@@ -1,7 +1,7 @@
 ---
 Type: Qlik Sense Visualization Extension
 Name: E-mergo App Inspector
-Version: 1.0-beta
+Version: 1.0-beta.2
 QEXT: qs-emergo-app-inspector.qext
 ---
 
