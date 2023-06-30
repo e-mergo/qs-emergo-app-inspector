@@ -66,6 +66,7 @@ When inspecting the app, the following assets from the app are presented:
 - Alternate states.
 
 #### Variables
+- System variables.
 - Variables along with their description, definition and tags.
 
 #### Bookmarks
