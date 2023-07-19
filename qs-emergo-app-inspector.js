@@ -802,9 +802,15 @@ define([
 				id: "app.model.getConfiguration()",
 				label: "Configuration",
 				details: {
-					isDesktop: {
+					installation: {
 						label: "Installation",
-						value: args.config.qFeatures.qIsDesktop ? "Qlik Sense Desktop" : null
+						value: util.isQlikCloud
+							? "Qlik Cloud"
+							: util.isQlikSenseClientManaged
+								? "Qlik Sense Client Managed"
+								: util.isQlikSenseDesktop
+									? "Qlik Sense Desktop"
+									: null
 					},
 					SSOEnabled: {
 						label: "SSO",
