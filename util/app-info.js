@@ -1,7 +1,7 @@
 /**
  * E-mergo utility functions for getting app info
  *
- * @version 20230516
+ * @version 20230707
  * @author Laurens Offereins <https://github.com/lmoffereins>
  *
  * @param  {Object} qlik                Qlik's core API
@@ -77,11 +77,14 @@ define([
 	},
 
 	/**
-	 * Holds whether the installation is Qlik Sense Desktop
+	 * Return whether the app runs in a Qlik Sense Desktop context
 	 *
-	 * @type {Boolean}
+	 * Determines context by checking app model attributes:
+	 * - layout.create (not in Qlik Sense Desktop)
+	 *
+	 * @type {Boolean} Is the context Qlik Sense Desktop?
 	 */
-	isDesktop = false,
+	isQlikSenseDesktop = ! currApp.model.enigmaModel.layout.hasOwnProperty("create"),
 
 	/**
 	 * Wrapper for requests made to Qlik's REST API's
@@ -178,7 +181,7 @@ define([
 			extensionList = {};
 
 			// QS Desktop has no Repository, so use the deprecated (!) function
-			if (isDesktop) {
+			if (isQlikSenseDesktop) {
 				qlik.getExtensionList( function( list ) {
 					list.forEach( function( a ) {
 						extensionList[a.id] = a.data;
@@ -217,7 +220,7 @@ define([
 			}
 
 		// Handle requests for additional extensions
-		} else if (! isDesktop && options.extensionIds) {
+		} else if (! isQlikSenseDesktop && options.extensionIds) {
 			loadExtensionQext(options.extensionIds).then( function() {
 				dfd.resolve(extensionList);
 			});
@@ -396,7 +399,7 @@ define([
 								label: translator.get("geo.properties.wms.status"),
 								value: qMeta.published
 									? translator.get("AppOverview.Content.PublicSheets").concat(" (", new Date(qMeta.publishTime).toLocaleString(), ")")
-									: (qMeta.approved ? translator.get("AppOverview.Content.CommunitySheets") : (!isDesktop ? "Personal" : null))
+									: (qMeta.approved ? translator.get("AppOverview.Content.CommunitySheets") : (! isQlikSenseDesktop ? "Personal" : null))
 							},
 							modifiedDate: {
 								label: translator.get("QCS.Common.DataCatalog.Dataset.Property.LastModified"),
@@ -1287,15 +1290,7 @@ define([
 		}, {});
 	};
 
-	// Set `isDesktop` on start
-	(function() {
-		currApp.global.isPersonalMode().then( function( resp ) {
-			isDesktop = resp.qReturn;
-		});
-	})();
-
 	return {
-		isDesktop: function() { return isDesktop; },
 		extensions: getExtensions,
 		script: getScript,
 		sheets: getSheets,
